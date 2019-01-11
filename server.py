@@ -10,7 +10,14 @@ class Handler(BaseHTTPRequestHandler):
     # request
     req_size = int(self.headers.getheaders('content-length')[0])
     body = self.rfile.read(req_size)
-    print body
+    data = json.loads(body)
+    if False:
+        # anonymize some data for screenshot
+        data['session']['user']['userId'] = "amzn1.ask.account.ABC123"
+        data['context']['System']['device']['deviceId'] = "amzn1.ask.device.ABC123"
+        data['context']['System']['apiAccessToken'] = "sample123"
+        data['context']['System']['user']['userId'] = data['session']['user']['userId']
+    print json.dumps(data, indent=4)
     
     # response
     reply = {
