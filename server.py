@@ -6,6 +6,13 @@ from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 PORT_NUMBER = 8888
 
 class Handler(BaseHTTPRequestHandler):
+  def do_GET(self):
+      self.send_response(405)
+      self.send_header('Allow',"POST")
+      self.send_header('Content-Type',"text/plain")
+      self.end_headers()
+      self.wfile.write("Only POST supported")
+  
   def do_POST(self):
     # request
     req_size = int(self.headers.getheaders('content-length')[0])
@@ -30,7 +37,7 @@ class Handler(BaseHTTPRequestHandler):
         }
     }
     self.send_response(200)
-    self.send_header('Content-Type','application/json')
+    self.send_header('Content-Type',"application/json")
     self.end_headers()
     self.wfile.write(json.dumps(reply)+'\n')
 
