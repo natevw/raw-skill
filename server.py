@@ -1,7 +1,7 @@
 # HT https://stackoverflow.com/a/52234729/179583
 
-from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 import json
+from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 
 PORT_NUMBER = 8888
 
@@ -13,7 +13,15 @@ class Handler(BaseHTTPRequestHandler):
     print body
     
     # response
-    reply = {'hello':'world', 'received':body}
+    reply = {
+        'version': "1.0",
+        'response': {
+            'outputSpeech': {
+                'type': "PlainText",
+                'text': "Your request has been received. Have a nice day."
+            }
+        }
+    }
     self.send_response(200)
     self.send_header('Content-Type','application/json')
     self.end_headers()
